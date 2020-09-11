@@ -15,7 +15,7 @@ val viewModelModule = module {
 
 class MainViewModel(private val characterRepository: CharacterRepository) : ViewModel(){
 
-    val characters: LiveData<Characters> = liveData {
+    val characters: LiveData<Characters?> = liveData {
         val data = characterRepository.getCharacters()
         emit(data)
     }

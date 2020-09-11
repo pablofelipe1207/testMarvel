@@ -3,6 +3,7 @@ package com.pfmiranda.testMarvel.activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,9 +19,13 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val mainViewModel : MainViewModel by viewModel()
 
-    private val observer = Observer<Characters> {
-        binding.rvCharacters.adapter = CharacterAdapter(it.data.results)
-        binding.rvCharacters.layoutManager = LinearLayoutManager(this)
+    private val observer = Observer<Characters?> {
+        it?.let {
+            binding.rvCharacters.adapter = CharacterAdapter(it.data.results)
+            binding.rvCharacters.layoutManager = LinearLayoutManager(this)
+        } ?: run{
+            Toast.makeText(this@MainActivity, getText(R.string.action_error), Toast.LENGTH_SHORT).show()
+        }
         binding.progressBar.visibility = View.GONE
     }
 

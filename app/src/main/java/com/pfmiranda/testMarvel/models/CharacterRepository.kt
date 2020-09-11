@@ -9,5 +9,13 @@ val marvelRepositoryModule = module {
 }
 
 class CharacterRepository(private val marvelApi: BasicApiService) {
-    suspend fun getCharacters() = marvelApi.getCharacters()
+    suspend fun getCharacters(): Characters? {
+        var characters : Characters? = null
+        try{
+            characters = marvelApi.getCharacters()
+        }catch (e: Exception) {
+            e.stackTrace
+        }
+        return characters
+    }
 }
